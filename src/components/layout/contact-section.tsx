@@ -1,20 +1,46 @@
 "use client";
 
-import { useActionState, useRef, useEffect } from "react";
-import { sendEmailAction } from "@/app/actions/send-email-action";
+import { useState, useRef } from "react";
 import FloatingInput from "@/components/ui/floating-input";
 import ScrollAnimation from "@/components/ui/scroll-animation";
 
 export default function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction, isPending] = useActionState(sendEmailAction, null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
 
-  // Reset form on successful submission
-  useEffect(() => {
-    if (state?.success && formRef.current) {
-      formRef.current.reset();
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      setSubmitStatus(result);
+
+      if (result.success && formRef.current) {
+        formRef.current.reset();
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitStatus({
+        success: false,
+        message: "Failed to send your enquiry. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-  }, [state]);
+  }
 
   return (
     <section id="enquire" className="bg-neutral-950 py-16 md:py-24">
@@ -60,7 +86,7 @@ export default function ContactSection() {
             <form
               ref={formRef}
               id="contact-form"
-              action={formAction}
+              onSubmit={handleSubmit}
               className="space-y-6"
             >
               <div className="grid gap-6 sm:grid-cols-2">
@@ -114,22 +140,22 @@ export default function ContactSection() {
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={isPending}
+                disabled={isSubmitting}
                 className="w-full rounded-md bg-brand-red px-6 py-3 text-sm font-bold leading-none text-white transition-colors hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isPending ? "Sending..." : "Send enquiry"}
+                {isSubmitting ? "Sending..." : "Send enquiry"}
               </button>
 
               {/* Status Message */}
-              {state && (
+              {submitStatus && (
                 <div
                   className={`rounded-md p-4 text-sm ${
-                    state.success
+                    submitStatus.success
                       ? "bg-green-500/20 text-green-400"
                       : "bg-brand-red/10 text-red-400"
                   }`}
                 >
-                  {state.message}
+                  {submitStatus.message}
                 </div>
               )}
             </form>

@@ -21,20 +21,46 @@ export async function sendEmail(formData: FormData) {
   const telephone = formData.get("telephone") as string;
   const message = formData.get("message") as string;
 
+  // Basic validation
+  if (!firstName || !lastName || !email || !telephone || !message) {
+    return {
+      success: false,
+      message: "Please fill in all required fields.",
+    };
+  }
+
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return {
+      success: false,
+      message: "Please enter a valid email address.",
+    };
+  }
+
   try {
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: "onboarding@resend.dev", // You'll need to verify a domain with Resend for production
       to: "liamyoung86@gmail.com",
+      replyTo: email,
       subject: `New Enquiry from ${firstName} ${lastName}`,
       html: `
         <h2>New Contact Form Enquiry</h2>
         <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Telephone:</strong> ${telephone}</p>
+        <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+        <p><strong>Telephone:</strong> <a href="tel:${telephone}">${telephone}</a></p>
         <p><strong>Message:</strong></p>
         <p>${message.replace(/\n/g, "<br>")}</p>
       `,
     });
+
+    if (error) {
+      console.error("Resend API error:", error);
+      return {
+        success: false,
+        message: "Failed to send your enquiry. Please try again later.",
+      };
+    }
 
     return { success: true, message: "Your enquiry has been sent successfully!" };
   } catch (error) {

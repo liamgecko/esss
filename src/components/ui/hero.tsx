@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative h-[640px] w-full max-w-7xl mx-auto overflow-hidden my-8 rounded-lg">
+    <section className="relative h-[640px] w-full max-w-7xl mx-auto overflow-hidden my-8 rounded-lg px-6">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image

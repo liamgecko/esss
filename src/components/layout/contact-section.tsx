@@ -136,7 +136,7 @@ export default function ContactSection() {
                   className={`rounded-md p-4 text-sm ${
                     submitStatus.success
                       ? "bg-green-500/20 text-green-400"
-                      : "bg-red-500/20 text-red-400"
+                      : "bg-brand-red/10 text-red-400"
                   }`}
                 >
                   {submitStatus.message}

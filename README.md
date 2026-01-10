@@ -18,7 +18,21 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Email Configuration
+
+The contact form uses [Resend](https://resend.com) to send emails. To enable email functionality:
+
+1. Sign up for a free account at [resend.com](https://resend.com)
+2. Get your API key from the [Resend dashboard](https://resend.com/api-keys)
+3. Create a `.env.local` file in the root directory:
+   ```bash
+   RESEND_API_KEY=re_your_api_key_here
+   ```
+4. Restart your development server
+
+**Note:** For production, you'll need to verify a domain with Resend and update the `from` address in `src/app/actions/send-email.ts`.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [DM Sans](https://fonts.google.com/specimen/DM+Sans) from Google Fonts.
 
 ## Learn More
 

@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-950">
+    <footer className="bg-neutral-950 border-t border-white/10">
 
-      <div className="mx-auto max-w-7xl px-6 py-8 border-t border-white/10">
+      <div className="mx-auto max-w-7xl px-6 py-8">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           {/* Left - Logo */}
           <a href="#" className="flex items-center gap-3">

@@ -22,6 +22,8 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 The contact form uses [Resend](https://resend.com) to send emails. To enable email functionality:
 
+### Local Development
+
 1. Sign up for a free account at [resend.com](https://resend.com)
 2. Get your API key from the [Resend dashboard](https://resend.com/api-keys)
 3. Create a `.env.local` file in the root directory:
@@ -30,7 +32,24 @@ The contact form uses [Resend](https://resend.com) to send emails. To enable ema
    ```
 4. Restart your development server
 
-**Note:** For production, you'll need to verify a domain with Resend and update the `from` address in `src/app/actions/send-email.ts`.
+### Production Deployment
+
+**For Vercel:**
+1. Go to your project settings on [Vercel](https://vercel.com)
+2. Navigate to **Settings** → **Environment Variables**
+3. Add a new environment variable:
+   - **Name:** `RESEND_API_KEY`
+   - **Value:** Your Resend API key (starts with `re_`)
+   - **Environment:** Production (and Preview if desired)
+4. Redeploy your application for the changes to take effect
+
+**For Other Platforms:**
+- **Netlify:** Site settings → Environment variables
+- **Railway:** Project → Variables
+- **Render:** Environment → Environment Variables
+- **Fly.io:** Use `fly secrets set RESEND_API_KEY=your_key`
+
+**Note:** For production, you'll need to verify a domain with Resend and update the `from` address in `src/app/actions/send-email.ts` from `"onboarding@resend.dev"` to your verified domain.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [DM Sans](https://fonts.google.com/specimen/DM+Sans) from Google Fonts.
 

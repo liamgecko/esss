@@ -1,44 +1,29 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { sendEmail } from "@/app/actions/send-email";
 import FloatingInput from "@/components/ui/floating-input";
 import ScrollAnimation from "@/components/ui/scroll-animation";
 
 export default function ContactSection() {
-  const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
     success: boolean;
     message: string;
   } | null>(null);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function handleSubmit(formData: FormData) {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    const formData = new FormData(e.currentTarget);
+    const result = await sendEmail(formData);
+    setSubmitStatus(result);
+    setIsSubmitting(false);
 
-    try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-      setSubmitStatus(result);
-
-      if (result.success && formRef.current) {
-        formRef.current.reset();
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setSubmitStatus({
-        success: false,
-        message: "Failed to send your enquiry. Please try again later.",
-      });
-    } finally {
-      setIsSubmitting(false);
+    if (result.success) {
+      // Reset form
+      const form = document.getElementById("contact-form") as HTMLFormElement;
+      form?.reset();
     }
   }
 
@@ -84,9 +69,8 @@ export default function ContactSection() {
           {/* Right Column - Contact Form */}
           <ScrollAnimation direction="left" delay={0.2} className="flex flex-col">
             <form
-              ref={formRef}
               id="contact-form"
-              onSubmit={handleSubmit}
+              action={handleSubmit}
               className="space-y-6"
             >
               <div className="grid gap-6 sm:grid-cols-2">

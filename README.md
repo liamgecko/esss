@@ -43,6 +43,14 @@ The contact form uses [Resend](https://resend.com) to send emails. To enable ema
    - **Environment:** Production (and Preview if desired)
 4. Redeploy your application for the changes to take effect
 
+**For Hostinger:**
+1. Log in to your Hostinger control panel (hPanel)
+2. Navigate to your domain/website settings
+3. Look for "Environment Variables" or ".env" file management
+4. Add `RESEND_API_KEY` with your API key value
+5. If using cPanel, you can add it via "Environment Variables" in the "Software" section
+6. Restart your Node.js application or rebuild your site
+
 **For Other Platforms:**
 - **Netlify:** Site settings → Environment variables
 - **Railway:** Project → Variables

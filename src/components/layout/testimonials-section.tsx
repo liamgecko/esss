@@ -61,7 +61,7 @@ export default function TestimonialsSection() {
             {/* Left Arrow */}
             <button
               onClick={goToPrevious}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-neutral-900 text-white transition-colors hover:bg-neutral-800 md:h-12 md:w-12"
+              className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md bg-neutral-900 text-white transition-colors hover:bg-neutral-800 md:h-12 md:w-12"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
@@ -86,7 +86,7 @@ export default function TestimonialsSection() {
             {/* Right Arrow */}
             <button
               onClick={goToNext}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-neutral-900 text-white transition-colors hover:bg-neutral-800 md:h-12 md:w-12"
+              className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md bg-neutral-900 text-white transition-colors hover:bg-neutral-800 md:h-12 md:w-12"
               aria-label="Next testimonial"
             >
               <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />

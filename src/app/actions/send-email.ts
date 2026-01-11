@@ -41,7 +41,10 @@ export async function sendEmail(formData: FormData) {
   try {
     const { data, error } = await resend.emails.send({
       from: "onboarding@resend.dev", // You'll need to verify a domain with Resend for production
-      to: "liamyoung86@gmail.com",
+      to: [
+        "b.hamilton@engineeringspecialisedsupport.co.uk",
+        "liamyoung86@gmail.com",
+      ],
       replyTo: email,
       subject: `New Enquiry from ${firstName} ${lastName}`,
       html: `

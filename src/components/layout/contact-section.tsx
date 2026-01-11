@@ -57,10 +57,10 @@ export default function ContactSection() {
               <p>
                 <span className="font-medium text-neutral-400">e:</span>{" "}
                 <a
-                  href="mailto:info@engineeringspecialisedservices.co.uk"
-                  className="text-white transition-colors hover:text-brand-red"
+                  href="mailto:b.hamilton@engineeringspecialisedsupport.co.uk"
+                  className="text-white border-b border-transparent transition-colors hover:border-brand-red"
                 >
-                  info@engineeringspecialisedservices.co.uk
+                  b.hamilton@engineeringspecialisedsupport.co.uk
                 </a>
               </p>
             </div>

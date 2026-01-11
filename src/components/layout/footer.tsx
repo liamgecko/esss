@@ -18,8 +18,8 @@ export default function Footer() {
           </a>
 
           {/* Right - Copyright */}
-          <p className="text-sm text-gray-300">
-            Copyright Engineering Specialised Support Services 2026
+          <p className="text-center text-sm text-gray-300 md:text-left">
+            © 2026 | Engineering Specialised Support Services
           </p>
         </div>
       </div>

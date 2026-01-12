@@ -1,30 +1,42 @@
-import { Wrench, Settings, Cog, Toolbox } from "lucide-react";
+import { Wrench, Settings, Bolt } from "lucide-react";
 import ScrollAnimation from "@/components/ui/scroll-animation";
 
 const services = [
   {
     icon: Wrench,
-    title: "Service one",
-    description:
-      "We provide specialised engineering support services, delivering innovative solutions and technical expertise to meet.",
+    title: "Onsite machining",
+    capabilities: [
+      "Pipe cutting, preparation, and boring",
+      "Flange facing and refurbishment",
+      "Line boring",
+      "Shaft machining and repair",
+      "Drilling and tapping",
+      "Milling",
+    ],
   },
   {
     icon: Settings,
-    title: "Service two",
-    description:
-      "We provide specialised engineering support services, delivering innovative solutions and technical expertise to meet.",
+    title: "Mechanical maintenance",
+    capabilities: [
+      "Planned and preventative maintenance",
+      "Mechanical repairs and component replacement",
+      "Equipment installation and removal",
+      "Alignment and fit-up",
+      "Inspection, fault finding, and corrective works",
+      "Shutdown and breakdown support",
+    ],
   },
   {
-    icon: Cog,
-    title: "Service three",
-    description:
-      "We provide specialised engineering support services, delivering innovative solutions and technical expertise to meet.",
-  },
-  {
-    icon: Toolbox,
-    title: "Service four",
-    description:
-      "We provide specialised engineering support services, delivering innovative solutions and technical expertise to meet.",
+    icon: Bolt,
+    title: "Controlled bolting",
+    capabilities: [
+      "Flange bolt tensioning and torquing",
+      "Hydraulic and mechanical bolt tensioning",
+      "Stud replacement and flange preparation",
+      "Sequence planning and documentation",
+      "Gasket installation and verification",
+      "Inspection and verification to engineering standards",
+    ],
   },
 ];
 
@@ -42,17 +54,16 @@ export default function ServicesSection() {
           </div>
 
           <h3 className="mb-6 text-3xl font-black leading-tighter tracking-tighter text-white">
-            Professional engineering services
+            Specialist onsite machining and mechanical maintenance
           </h3>
 
           <p className="max-w-2xl text-neutral-400 leading-tight">
-            We provide specialised engineering support services, delivering
-            innovative             solutions and technical expertise to meet.
+          All work is conducted in accordance with client specifications, site safety procedures, and industry standards (ASME, API, or equivalent), including operations in live or high-risk environments.
           </p>
         </ScrollAnimation>
 
         {/* Service Cards Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -68,14 +79,19 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Title */}
-                <h4 className="mb-3 text-lg font-black text-white">
+                <h4 className="mb-4 text-lg font-black text-white">
                   {service.title}
                 </h4>
 
-                {/* Description */}
-                <p className="text-sm leading-tight text-neutral-400">
-                  {service.description}
-                </p>
+                {/* Capabilities List */}
+                <ul className="space-y-2 text-sm leading-tight text-neutral-400">
+                  {service.capabilities.map((capability, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-red" />
+                      <span>{capability}</span>
+                    </li>
+                  ))}
+                </ul>
               </ScrollAnimation>
             );
           })}

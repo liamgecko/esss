@@ -16,19 +16,18 @@ export default function AboutSection() {
             </div>
 
             <h3 className="mb-6 text-3xl font-black leading-tighter tracking-tighter text-white">
-              Professional engineering services
+              Trusted by heavy industry to reduce downtime on critical plant and equipment.
             </h3>
 
             <div className="mb-8 space-y-4 text-neutral-400">
               <p className="leading-tight">
-                We provide specialised engineering support services, delivering
-                innovative solutions and technical expertise to meet your unique
-                challenges. Contact us today to learn more.
+              Our business specialises in onsite machining and mechanical maintenance for heavy industrial facilities where precision, safety, and reliability are critical.
               </p>
               <p className="leading-tight">
-                Our team of experienced engineers brings decades of combined
-                expertise to every project, ensuring the highest standards of
-                quality and precision in all our work.
+              We support power generation, oil and gas, marine, and manufacturing operations by delivering accurate onsite machining and mechanical repair services directly at site. This approach reduces turnaround times, controls costs, and ensures alignment with client maintenance schedules.
+              </p>
+              <p className="leading-tight">
+              With a strong focus on safety compliance, high-quality workmanship, and operational efficiency, we provide dependable support for critical plant and equipment. Our team is experienced in working safely within live and high-risk environments, delivering the required results without compromise.
               </p>
             </div>
 

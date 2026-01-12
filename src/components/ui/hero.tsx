@@ -35,7 +35,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.25, 0, 1] }}
               className="mb-4 text-4xl font-black leading-tighter text-white tracking-tight text-balance"
             >
-              Professional engineering services in Fife.
+              Specialist onsite machining and mechanical maintenance
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -43,9 +43,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.25, 0, 1] }}
               className="mb-8 leading-relaxed text-white"
             >
-              We provide specialised engineering support services, delivering
-              innovative solutions and technical expertise to meet your unique
-              challenges. Contact us today to learn more.
+              Precision, safety, and reliability for heavy industrial facilities — delivered on time and with minimal disruption.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 30 }}

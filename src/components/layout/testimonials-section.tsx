@@ -1,42 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ScrollAnimation from "@/components/ui/scroll-animation";
-import Lightbox from "@/components/ui/lightbox";
 
 const testimonials = [
   {
-    quote:
-      "We provide specialised engineering support services, delivering innovative solutions and technical expertise to meet. We provide specialised engineering support services, delivering innovative solutions and technical expertise to meet.",
-    images: [
-      "/esss-hero.jpg",
-      "/esss-content.jpg",
-    ],
+    quote: `Barry has the ability to scope any job, order the correct equipment and execute the job to the highest standard that’s required in the challenging world of Precision Engineering.
+
+I would recommend Barry to any company that specializes in On-Site Machining, Bolting and Mechanical works - He has been a massive asset to Gillon Machining over the years.`,
+    name: "Gareth Gillon Williams",
+    company: "Owner, Gillon Machining Ltd",
   },
   {
-    quote:
-      "Outstanding service and exceptional results. The team's expertise and attention to detail made all the difference in our project.",
-    images: [
-      "/esss-content.jpg",
-      "/esss-hero.jpg",
-    ],
-  },
-  {
-    quote:
-      "Professional, reliable, and always willing to go the extra mile. Highly recommend their engineering services.",
-    images: [
-      "/esss-hero.jpg",
-      "/esss-content.jpg",
-    ],
+    quote: `I've had the pleasure of working with Barry Hamilton for several projects and can confidently confirm that the service provided is second to none. Every engagement is carried out with the utmost diligence and a high level of engineering professionalism.
+
+ESSS demonstrate a strong mechanical service background, supported by extensive knowledge in the field of machining. The quality of service delivered is consistently top-class on every project.`,
+    name: "Garry Bratley",
+    company: "Contracts Manager, TEI Industrial Services",
   },
 ];
 
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
 
   const goToPrevious = () => {
     setCurrentIndex((prev) =>
@@ -49,31 +35,6 @@ export default function TestimonialsSection() {
       prev === testimonials.length - 1 ? 0 : prev + 1
     );
   };
-
-  const openLightbox = (imageIndex: number) => {
-    setLightboxImageIndex(imageIndex);
-    setLightboxOpen(true);
-  };
-
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-  };
-
-  const goToNextImage = () => {
-    const currentTestimonial = testimonials[currentIndex];
-    setLightboxImageIndex((prev) =>
-      prev === currentTestimonial.images.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const goToPreviousImage = () => {
-    const currentTestimonial = testimonials[currentIndex];
-    setLightboxImageIndex((prev) =>
-      prev === 0 ? currentTestimonial.images.length - 1 : prev - 1
-    );
-  };
-
-  const currentTestimonial = testimonials[currentIndex];
 
   return (
     <section id="testimonials" className="bg-neutral-950 py-16 md:py-24">
@@ -110,7 +71,7 @@ export default function TestimonialsSection() {
 
             {/* Testimonial Content */}
             <div className="relative w-full max-w-4xl">
-              <div className="relative min-h-[150px] text-center md:min-h-[180px]">
+              <div className="relative min-h-[190px] text-center md:min-h-[210px]">
                 {testimonials.map((testimonial, index) => (
                   <div
                     key={index}
@@ -120,31 +81,20 @@ export default function TestimonialsSection() {
                         : "pointer-events-none opacity-0"
                     }`}
                   >
-                    <blockquote className="mb-6 w-full px-2 text-base leading-relaxed text-white md:px-4 md:text-xl lg:text-2xl">
-                      <span className="w-full">&quot;{testimonial.quote}&quot;</span>
+                    <blockquote className="mb-6 w-full px-2 text-base leading-relaxed text-white md:px-4 md:text-xl">
+                      <span className="w-full whitespace-pre-line">
+                        &quot;{testimonial.quote}&quot;
+                      </span>
                     </blockquote>
 
-                    {/* Thumbnail Gallery */}
-                    {testimonial.images && testimonial.images.length > 0 && (
-                      <div className="flex flex-wrap items-center justify-center gap-3">
-                        {testimonial.images.map((image, imgIndex) => (
-                          <button
-                            key={imgIndex}
-                            onClick={() => openLightbox(imgIndex)}
-                            className="relative h-20 w-20 cursor-pointer overflow-hidden rounded-md border-2 border-white/20 transition-all hover:border-brand-red hover:scale-105 md:h-24 md:w-24"
-                            aria-label={`View image ${imgIndex + 1}`}
-                          >
-                            <Image
-                              src={image}
-                              alt={`Gallery thumbnail ${imgIndex + 1}`}
-                              fill
-                              className="object-cover"
-                              sizes="(max-width: 768px) 80px, 96px"
-                            />
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                    <div className="flex flex-col items-center">
+                      <p className="text-sm font-bold text-white">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-sm text-neutral-400">
+                        {testimonial.company}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -161,18 +111,6 @@ export default function TestimonialsSection() {
           </div>
         </ScrollAnimation>
       </div>
-
-      {/* Lightbox */}
-      {currentTestimonial.images && currentTestimonial.images.length > 0 && (
-        <Lightbox
-          images={currentTestimonial.images}
-          currentIndex={lightboxImageIndex}
-          isOpen={lightboxOpen}
-          onClose={closeLightbox}
-          onNext={goToNextImage}
-          onPrevious={goToPreviousImage}
-        />
-      )}
     </section>
   );
 }

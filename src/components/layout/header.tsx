@@ -4,8 +4,8 @@ import Link from "next/link";
 export default function Header() {
   return (
     <>
-      <header className="bg-neutral-950 px-6 py-5 border-b border-white/10">
-        <div className="mx-auto flex max-w-7xl px-6 items-center justify-between">
+      <header className="bg-neutral-950 px-4 py-5 border-b border-white/10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
           {/* Logo Section */}
           <Link href="/" className="flex items-center" aria-label="Home">
             <Image
@@ -14,7 +14,7 @@ export default function Header() {
               width={126}
               height={60}
               priority
-              className="h-10 w-auto sm:h-auto"
+              className="h-14 w-auto sm:h-20"
             />
           </Link>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ScrollAnimation from "@/components/ui/scroll-animation";
 
@@ -23,6 +23,8 @@ ESSS demonstrate a strong mechanical service background, supported by extensive 
 
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
+  const activeSlideRef = useRef<HTMLDivElement | null>(null);
 
   const goToPrevious = () => {
     setCurrentIndex((prev) =>
@@ -35,6 +37,17 @@ export default function TestimonialsSection() {
       prev === testimonials.length - 1 ? 0 : prev + 1
     );
   };
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (!activeSlideRef.current) return;
+      setContentHeight(activeSlideRef.current.offsetHeight);
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [currentIndex]);
 
   return (
     <section id="testimonials" className="bg-neutral-950 py-16 md:py-24">
@@ -71,10 +84,21 @@ export default function TestimonialsSection() {
 
             {/* Testimonial Content */}
             <div className="relative w-full max-w-4xl">
-              <div className="relative min-h-[190px] text-center md:min-h-[210px]">
+              <div
+                className="relative overflow-hidden text-center transition-[height] duration-300 ease-in-out"
+                style={{ height: contentHeight ?? undefined }}
+              >
                 {testimonials.map((testimonial, index) => (
                   <div
                     key={index}
+                    ref={
+                      index === currentIndex
+                        ? (node) => {
+                            activeSlideRef.current = node;
+                          }
+                        : null
+                    }
+                    aria-hidden={index !== currentIndex}
                     className={`absolute left-0 right-0 top-0 flex flex-col items-center transition-opacity duration-500 ease-in-out ${
                       index === currentIndex
                         ? "opacity-100"

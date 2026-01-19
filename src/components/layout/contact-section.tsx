@@ -52,15 +52,14 @@ export default function ContactSection() {
 
             <div className="space-y-2 text-white">
               <p>
-                <span className="font-medium text-neutral-400">t:</span> 01234 567890
+                07590458517
               </p>
               <p>
-                <span className="font-medium text-neutral-400">e:</span>{" "}
                 <a
-                  href="mailto:b.hamilton@engineeringspecialisedsupport.co.uk"
+                  href="mailto:info@engineeringspecialisedsupport.com"
                   className="text-white border-b border-transparent transition-colors hover:border-brand-red"
                 >
-                  b.hamilton@engineeringspecialisedsupport.co.uk
+                  info@engineeringspecialisedsupport.com
                 </a>
               </p>
             </div>

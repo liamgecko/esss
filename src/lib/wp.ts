@@ -218,7 +218,8 @@ const PAGE_BLOCKS_QUERY = /* GraphQL */ `
             heading
             mainHeading
             content
-            galleryImages {
+            # WPGraphQL connections often default to 10 items if first isn't provided.
+            galleryImages(first: 1000) {
               nodes {
                 id
                 sourceUrl

@@ -40,9 +40,11 @@ export async function sendEmail(formData: FormData) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "onboarding@resend.dev", // You'll need to verify a domain with Resend for production
+      // Wix DNS doesn't allow Resend domain verification, so use Resend's shared domain.
+      // Replies still go to the enquirer via replyTo.
+      from: "ESSS <onboarding@resend.dev>",
       to: [
-        "b.hamilton@engineeringspecialisedsupport.co.uk",
+        "info@engineeringspecialisedsupport.com",
         "liamyoung86@gmail.com",
       ],
       replyTo: email,

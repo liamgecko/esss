@@ -5,7 +5,8 @@ import TestimonialsSection from "@/components/layout/testimonials-section";
 import Header from "@/components/layout/header";
 import ContactSection from "@/components/layout/contact-section";
 import Footer from "@/components/layout/footer";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -18,7 +19,12 @@ export const metadata: Metadata = {
   title: "ESSS - Specialist onsite machining and mechanical maintenance in Fife, Scotland",
   description: "Specialist onsite machining and mechanical maintenance for heavy industrial facilities. Precision, safety, and reliability delivered on time with minimal disruption.",
   icons: {
-    icon: "/favicon.png",
+    // Favicons are aggressively cached; bump ?v= when changing the asset.
+    icon: [
+      { url: "/favicon.ico?v=2" },
+      { url: "/favicon.png?v=2", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico?v=2",
   },
 };
 
@@ -38,6 +44,7 @@ export default function RootLayout({
         <ContactSection />
         <Footer />
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

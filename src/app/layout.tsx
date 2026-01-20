@@ -21,10 +21,10 @@ export const metadata: Metadata = {
   icons: {
     // Favicons are aggressively cached; bump ?v= when changing the asset.
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico?v=3" },
+      { url: "/favicon.png?v=3", type: "image/png" },
     ],
-    shortcut: "/favicon.ico",
+    shortcut: "/favicon.ico?v=3",
   },
 };
 

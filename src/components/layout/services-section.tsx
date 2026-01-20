@@ -1,71 +1,78 @@
-import { Wrench, Settings, Bolt } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { Bolt, Cog, Settings, Toolbox, Wrench } from "lucide-react";
 import ScrollAnimation from "@/components/ui/scroll-animation";
+import WpHtml from "@/components/ui/wp-html";
 
-const services = [
-  {
-    icon: Wrench,
-    title: "Onsite machining",
-    capabilities: [
-      "Pipe cutting, preparation, and boring",
-      "Flange facing and refurbishment",
-      "Line boring",
-      "Shaft machining and repair",
-      "Drilling and tapping",
-      "Milling",
-    ],
-  },
-  {
-    icon: Settings,
-    title: "Mechanical maintenance",
-    capabilities: [
-      "Planned and preventative maintenance",
-      "Mechanical repairs and component replacement",
-      "Equipment installation and removal",
-      "Alignment and fit-up",
-      "Inspection, fault finding, and corrective works",
-      "Shutdown and breakdown support",
-    ],
-  },
-  {
-    icon: Bolt,
-    title: "Controlled bolting",
-    capabilities: [
-      "Flange bolt tensioning and torquing",
-      "Hydraulic and mechanical bolt tensioning",
-      "Stud replacement and flange preparation",
-      "Sequence planning and documentation",
-      "Gasket installation and verification",
-      "Inspection and verification to engineering standards",
-    ],
-  },
-];
+type Link = {
+  url?: string | null;
+  title?: string | null;
+  target?: string | null;
+};
 
-export default function ServicesSection() {
+type Card = {
+  heading?: string | null;
+  content?: string | null;
+  icon?: string | null;
+};
+
+export type ServicesSectionProps = {
+  heading?: string | null;
+  mainHeading?: string | null;
+  content?: string | null;
+  cards?: Card[] | null;
+  // not used now, but keeps parity with block signature if needed later
+  primaryButton?: Link | null;
+};
+
+function iconFromString(value?: string | null): LucideIcon {
+  const key = (value ?? "").trim().toLowerCase();
+  const map: Record<string, LucideIcon> = {
+    bolt: Bolt,
+    cog: Cog,
+    settings: Settings,
+    toolbox: Toolbox,
+    wrench: Wrench,
+  };
+  return map[key] ?? Wrench;
+}
+
+export default function ServicesSection({
+  heading,
+  mainHeading,
+  content,
+  cards,
+}: ServicesSectionProps) {
+  const hasAny = !!heading || !!mainHeading || !!content || (cards?.length ?? 0) > 0;
+  if (!hasAny) return null;
+
   return (
     <section id="services" className="bg-neutral-950 py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <ScrollAnimation direction="up" className="mb-12">
-          <div className="mb-1 flex items-center gap-2">
-            <div className="h-px w-[58px] bg-brand-red" />
-            <h2 className="text-xs uppercase tracking-widest font-medium text-neutral-400">
-              Our services
-            </h2>
-          </div>
+          {heading ? (
+            <div className="mb-1 flex items-center gap-2">
+              <div className="h-px w-[58px] bg-brand-red" />
+              <h2 className="text-xs uppercase tracking-widest font-medium text-neutral-400">
+                {heading}
+              </h2>
+            </div>
+          ) : null}
 
-          <h3 className="mb-6 text-3xl font-black leading-tighter tracking-tighter text-white">
-            Specialist onsite machining and mechanical maintenance
-          </h3>
+          {mainHeading ? (
+            <h3 className="mb-6 text-3xl font-black leading-tighter tracking-tighter text-white">
+              {mainHeading}
+            </h3>
+          ) : null}
 
-          <p className="max-w-2xl text-neutral-400 leading-tight">
-          All work is conducted in accordance with client specifications, site safety procedures, and industry standards (ASME, API, or equivalent), including operations in live or high-risk environments.
-          </p>
+          <WpHtml html={content} className="max-w-2xl" />
         </ScrollAnimation>
 
         {/* Service Cards Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => {
-            const Icon = service.icon;
+        {(cards?.length ?? 0) > 0 ? (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {(cards ?? []).map((card, index) => {
+              const Icon = iconFromString(card.icon);
             return (
               <ScrollAnimation
                 key={index}
@@ -79,23 +86,18 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Title */}
-                <h4 className="mb-4 text-lg font-black text-white">
-                  {service.title}
-                </h4>
+                {card.heading ? (
+                  <h4 className="mb-3 text-lg font-black text-white">
+                    {card.heading}
+                  </h4>
+                ) : null}
 
-                {/* Capabilities List */}
-                <ul className="space-y-2 text-sm leading-tight text-neutral-400">
-                  {service.capabilities.map((capability, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-red" />
-                      <span>{capability}</span>
-                    </li>
-                  ))}
-                </ul>
+                <WpHtml html={card.content} className="text-sm [&_p]:mb-3 [&_ul]:mt-3" />
               </ScrollAnimation>
             );
-          })}
-        </div>
+            })}
+          </div>
+        ) : null}
       </div>
     </section>
   );

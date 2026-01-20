@@ -1,0 +1,17 @@
+/*
+Theme Name: ESSS Headless
+Theme URI: https://engineeringspecialisedsupport.com
+Author: ESSS
+Author URI: https://engineeringspecialisedsupport.com
+Description: Bare-bones WordPress theme for headless CMS usage (WPGraphQL).
+Version: 0.1.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: esss-headless
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 8.0
+*/
+
+/* Intentionally minimal. Add theme styles here if you ever need a WP-facing front end. */
+

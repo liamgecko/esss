@@ -22,6 +22,25 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 The contact form uses [Resend](https://resend.com) to send emails. To enable email functionality:
 
+## WordPress (Headless CMS) Configuration
+
+This site can pull page content from WordPress via WPGraphQL.
+
+### Local Development
+
+1. Copy `env.example` → `.env.local`
+2. Ensure this is set:
+   ```bash
+   WP_GRAPHQL_ENDPOINT=https://cms.engineeringspecialisedsupport.com/graphql
+   ```
+3. Restart the dev server
+
+### Production (Vercel)
+
+Set the same environment variable in Vercel:
+- **Name**: `WP_GRAPHQL_ENDPOINT`
+- **Value**: `https://cms.engineeringspecialisedsupport.com/graphql`
+
 ### Local Development
 
 1. Sign up for a free account at [resend.com](https://resend.com)

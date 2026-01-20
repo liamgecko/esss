@@ -5,6 +5,7 @@ import TestimonialsSection from "@/components/layout/testimonials-section";
 import Header from "@/components/layout/header";
 import ContactSection from "@/components/layout/contact-section";
 import Footer from "@/components/layout/footer";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
         <TestimonialsSection />
         <ContactSection />
         <Footer />
+        <SpeedInsights />
       </body>
     </html>
   );

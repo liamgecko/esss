@@ -21,6 +21,14 @@ function resolveRedirectUrl(location: string, currentUrl: string) {
   }
 }
 
+export function normalizeCmsUrl(url?: string | null): string | null {
+  if (!url) return null;
+  return url.replace(
+    /^http:\/\/cms\.engineeringspecialisedsupport\.com\//,
+    "https://cms.engineeringspecialisedsupport.com/"
+  );
+}
+
 async function wpRequest<TData, TVariables extends Record<string, unknown>>(
   query: string,
   variables: TVariables
@@ -45,16 +53,7 @@ async function wpRequest<TData, TVariables extends Record<string, unknown>>(
 
   // Follow a small number of redirects manually so we keep the POST body.
   for (let i = 0; i < 5; i++) {
-    try {
-      res = await fetch(endpoint, baseInit);
-    } catch (err) {
-      // Some hosting setups intermittently break TLS; retry once over http as a fallback.
-      if (i === 0 && endpoint.startsWith("https://")) {
-        endpoint = endpoint.replace(/^https:/, "http:");
-        continue;
-      }
-      throw err;
-    }
+    res = await fetch(endpoint, baseInit);
 
     if (isRedirectStatus(res.status)) {
       const location = res.headers.get("location");

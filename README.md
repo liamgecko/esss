@@ -31,7 +31,7 @@ This site can pull page content from WordPress via WPGraphQL.
 1. Copy `env.example` → `.env.local`
 2. Ensure this is set:
    ```bash
-   WP_GRAPHQL_ENDPOINT=http://cms.engineeringspecialisedsupport.com/graphql
+   WP_GRAPHQL_ENDPOINT=https://cms.engineeringspecialisedsupport.com/graphql
    ```
 3. Restart the dev server
 
@@ -39,7 +39,7 @@ This site can pull page content from WordPress via WPGraphQL.
 
 Set the same environment variable in Vercel:
 - **Name**: `WP_GRAPHQL_ENDPOINT`
-- **Value**: `http://cms.engineeringspecialisedsupport.com/graphql`
+- **Value**: `https://cms.engineeringspecialisedsupport.com/graphql`
 
 ### Local Development
 

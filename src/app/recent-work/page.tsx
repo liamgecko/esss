@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import GallerySection from "@/components/layout/gallery-section";
-import { getPageByUri } from "@/lib/wp";
+import { getPageByUri, normalizeCmsUrl } from "@/lib/wp";
 
 export const metadata: Metadata = {
   title:
@@ -23,7 +23,7 @@ export default async function RecentWorkPage() {
 
         const images =
           block.galleryImages?.nodes?.map((n) => ({
-            src: n.sourceUrl,
+            src: normalizeCmsUrl(n.sourceUrl),
             alt: n.altText,
           })) ?? [];
 

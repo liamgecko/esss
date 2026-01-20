@@ -1,7 +1,7 @@
 import Hero from "@/components/ui/hero";
 import AboutSection from "@/components/layout/about-section";
 import ServicesSection from "@/components/layout/services-section";
-import { getPageByUri } from "@/lib/wp";
+import { getPageByUri, normalizeCmsUrl } from "@/lib/wp";
 
 export default async function Home() {
   const page = await getPageByUri("/");
@@ -15,7 +15,14 @@ export default async function Home() {
             return (
               <Hero
                 key={idx}
-                heroImage={block.heroImage?.node ?? null}
+                heroImage={
+                  block.heroImage?.node
+                    ? {
+                        ...block.heroImage.node,
+                        sourceUrl: normalizeCmsUrl(block.heroImage.node.sourceUrl),
+                      }
+                    : null
+                }
                 heroHeading={block.heroHeading}
                 heroText={block.heroText}
                 primaryButton={block.primaryButton}
@@ -31,7 +38,14 @@ export default async function Home() {
                 mainHeading={block.mainHeading}
                 content={block.content}
                 primaryButton={block.primaryButton}
-                image={block.image?.node ?? null}
+                image={
+                  block.image?.node
+                    ? {
+                        ...block.image.node,
+                        sourceUrl: normalizeCmsUrl(block.image.node.sourceUrl),
+                      }
+                    : null
+                }
               />
             );
 

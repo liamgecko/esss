@@ -9,16 +9,66 @@ function getWpEndpoint() {
   return endpoint;
 }
 
+function isRedirectStatus(status: number) {
+  return status === 301 || status === 302 || status === 303 || status === 307 || status === 308;
+}
+
+function resolveRedirectUrl(location: string, currentUrl: string) {
+  try {
+    return new URL(location, currentUrl).toString();
+  } catch {
+    return location;
+  }
+}
+
 async function wpRequest<TData, TVariables extends Record<string, unknown>>(
   query: string,
   variables: TVariables
 ): Promise<TData> {
-  const res = await fetch(getWpEndpoint(), {
+  if (!query || !query.trim()) {
+    throw new Error("WPGraphQL: missing query");
+  }
+
+  const originalEndpoint = getWpEndpoint();
+  const body = JSON.stringify({ query, variables });
+  const baseInit = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, variables }),
+    body,
     next: { revalidate: 60 },
-  });
+    // Important: avoid automatic redirect-follow which can drop POST body (301/302 → GET).
+    redirect: "manual" as const,
+  };
+
+  let endpoint = originalEndpoint;
+  let res: Response | null = null;
+
+  // Follow a small number of redirects manually so we keep the POST body.
+  for (let i = 0; i < 5; i++) {
+    try {
+      res = await fetch(endpoint, baseInit);
+    } catch (err) {
+      // Some hosting setups intermittently break TLS; retry once over http as a fallback.
+      if (i === 0 && endpoint.startsWith("https://")) {
+        endpoint = endpoint.replace(/^https:/, "http:");
+        continue;
+      }
+      throw err;
+    }
+
+    if (isRedirectStatus(res.status)) {
+      const location = res.headers.get("location");
+      if (!location) break;
+      endpoint = resolveRedirectUrl(location, endpoint);
+      continue;
+    }
+
+    break;
+  }
+
+  if (!res) {
+    throw new Error("WPGraphQL: no response");
+  }
 
   const json = (await res.json()) as GraphQLResponse<TData>;
 
@@ -188,12 +238,18 @@ const PAGE_BLOCKS_QUERY = /* GraphQL */ `
 `;
 
 export async function getPageByUri(uri: string): Promise<PageWithBlocks | null> {
-  const data = await wpRequest<{ pageBy: PageWithBlocks | null }, { uri: string }>(
-    PAGE_BLOCKS_QUERY,
-    { uri }
-  );
+  try {
+    const data = await wpRequest<{ pageBy: PageWithBlocks | null }, { uri: string }>(
+      PAGE_BLOCKS_QUERY,
+      { uri }
+    );
 
-  return data.pageBy;
+    return data.pageBy;
+  } catch (err) {
+    // Don't fail builds if WP is temporarily unreachable/misconfigured.
+    console.error("WPGraphQL getPageByUri failed:", err);
+    return null;
+  }
 }
 
 export type TestimonialsOptionQuote = {

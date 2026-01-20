@@ -63,7 +63,10 @@ export async function sendEmail(formData: FormData) {
       console.error("Resend API error:", error);
       return {
         success: false,
-        message: "Failed to send your enquiry. Please try again later.",
+        message:
+          typeof (error as { message?: unknown }).message === "string"
+            ? (error as { message: string }).message
+            : "Failed to send your enquiry. Please try again later.",
       };
     }
 
@@ -72,7 +75,10 @@ export async function sendEmail(formData: FormData) {
     console.error("Error sending email:", error);
     return {
       success: false,
-      message: "Failed to send your enquiry. Please try again later.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Failed to send your enquiry. Please try again later.",
     };
   }
 }
